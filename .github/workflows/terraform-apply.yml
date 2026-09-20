@@ -1,0 +1,68 @@
+name: Terraform Apply
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "envs/**"
+      - "modules/**"
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: terraform-apply-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  apply-dev:
+    runs-on: ubuntu-latest
+    environment: dev
+    defaults:
+      run:
+        working-directory: envs/dev
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.15.0"
+          terraform_wrapper: false
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.TERRAFORM_APPLY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - run: terraform init -backend-config=backend.hcl
+
+      - run: terraform plan -var-file=terraform.tfvars -out=tfplan
+
+      - run: terraform apply tfplan
+
+  apply-prod:
+    runs-on: ubuntu-latest
+    needs: apply-dev
+    environment: prod
+    defaults:
+      run:
+        working-directory: envs/prod
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.15.0"
+          terraform_wrapper: false
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.TERRAFORM_APPLY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - run: terraform init -backend-config=backend.hcl
+
+      - run: terraform plan -var-file=terraform.tfvars -out=tfplan
+
+      - run: terraform apply tfplan
