@@ -40,7 +40,7 @@ jobs:
       - run: terraform fmt -check -recursive
         working-directory: .
 
-      - run: terraform init -backend-config=backend.hcl
+      - run: terraform init
 
       - run: terraform validate
 

@@ -6,7 +6,13 @@ terraform {
     random = { source = "hashicorp/random", version = "~> 3.9" }
   }
 
-  backend "s3" {}
+  backend "s3" {
+    bucket       = "whispe-terraform-state"
+    key          = "whispe/prod/terraform.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
+  }
 }
 
 provider "aws" {

@@ -7,7 +7,13 @@ terraform {
     }
   }
 
-  backend "s3" {}
+  backend "s3" {
+    bucket       = "whispe-terraform-state"
+    key          = "whispe/global/terraform.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
+  }
 }
 
 provider "aws" {

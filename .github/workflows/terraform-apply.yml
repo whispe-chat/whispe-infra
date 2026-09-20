@@ -35,7 +35,7 @@ jobs:
           role-to-assume: ${{ vars.TERRAFORM_APPLY_ROLE_ARN }}
           aws-region: us-east-1
 
-      - run: terraform init -backend-config=backend.hcl
+      - run: terraform init
 
       - run: terraform plan -var-file=terraform.tfvars -out=tfplan
 
@@ -61,7 +61,7 @@ jobs:
           role-to-assume: ${{ vars.TERRAFORM_APPLY_ROLE_ARN }}
           aws-region: us-east-1
 
-      - run: terraform init -backend-config=backend.hcl
+      - run: terraform init
 
       - run: terraform plan -var-file=terraform.tfvars -out=tfplan
 
