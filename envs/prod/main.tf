@@ -11,7 +11,6 @@ terraform {
 
 provider "aws" {
   region  = var.aws_region
-  profile = "whispe"
   default_tags {
     tags = { Project = var.project_name, Environment = var.environment, ManagedBy = "terraform" }
   }
