@@ -10,3 +10,7 @@ variable "state_bucket_name" {
   type    = string
   default = "whispe-terraform-state"
 }
+variable "domain_name" {
+  type    = string
+  default = "whispe.me"
+}

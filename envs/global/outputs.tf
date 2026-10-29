@@ -13,3 +13,9 @@ output "prod_plan_role_arn" {
 output "prod_apply_role_arn" {
   value = module.terraform_ci_prod.apply_role_arn
 }
+output "route53_zone_id" {
+  value = aws_route53_zone.primary.zone_id
+}
+output "route53_name_servers" {
+  value = aws_route53_zone.primary.name_servers
+}

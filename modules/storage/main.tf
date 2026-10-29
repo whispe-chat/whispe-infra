@@ -27,12 +27,32 @@ resource "aws_secretsmanager_secret_version" "mongodb_uri" {
   lifecycle { ignore_changes = [secret_string] }
 }
 
-resource "aws_secretsmanager_secret" "jwt_secret" {
-  name                    = "${var.project_name}/${var.environment}/jwt_secret"
+resource "aws_secretsmanager_secret" "jwt_access_secret" {
+  name                    = "${var.project_name}/${var.environment}/jwt_access_secret"
   recovery_window_in_days = var.secret_recovery_window
 }
-resource "aws_secretsmanager_secret_version" "jwt_secret" {
-  secret_id     = aws_secretsmanager_secret.jwt_secret.id
+resource "aws_secretsmanager_secret_version" "jwt_access_secret" {
+  secret_id     = aws_secretsmanager_secret.jwt_access_secret.id
+  secret_string = "REPLACE_ME"
+  lifecycle { ignore_changes = [secret_string] }
+}
+
+resource "aws_secretsmanager_secret" "jwt_refresh_secret" {
+  name                    = "${var.project_name}/${var.environment}/jwt_refresh_secret"
+  recovery_window_in_days = var.secret_recovery_window
+}
+resource "aws_secretsmanager_secret_version" "jwt_refresh_secret" {
+  secret_id     = aws_secretsmanager_secret.jwt_refresh_secret.id
+  secret_string = "REPLACE_ME"
+  lifecycle { ignore_changes = [secret_string] }
+}
+
+resource "aws_secretsmanager_secret" "encryption_key" {
+  name                    = "${var.project_name}/${var.environment}/encryption_key"
+  recovery_window_in_days = var.secret_recovery_window
+}
+resource "aws_secretsmanager_secret_version" "encryption_key" {
+  secret_id     = aws_secretsmanager_secret.encryption_key.id
   secret_string = "REPLACE_ME"
   lifecycle { ignore_changes = [secret_string] }
 }

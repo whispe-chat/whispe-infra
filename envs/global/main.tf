@@ -47,3 +47,16 @@ module "terraform_ci_prod" {
   github_repo_id           = var.github_repo_id
   state_bucket_name        = var.state_bucket_name
 }
+
+resource "aws_route53_zone" "primary" {
+  name = var.domain_name
+
+  lifecycle {
+    prevent_destroy = true
+  }
+
+  tags = {
+    Project   = var.project_name
+    ManagedBy = "terraform"
+  }
+}

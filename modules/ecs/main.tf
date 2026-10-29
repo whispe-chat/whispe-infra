@@ -28,11 +28,17 @@ resource "aws_ecs_task_definition" "app" {
     environment = [
       { name = "NODE_ENV", value = var.environment == "prod" ? "production" : var.environment },
       { name = "PORT", value = tostring(var.container_port) },
-      { name = "S3_BUCKET", value = var.s3_bucket_name },
+      { name = "AWS_S3_BUCKET_NAME", value = var.s3_bucket_name },
+      { name = "AWS_REGION", value = var.aws_region },
+      { name = "FRONTEND_URL", value = var.frontend_url },
+      { name = "ACCESS_TOKEN_EXPIRATION", value = "15M" },
+      { name = "REFRESH_TOKEN_EXPIRATION", value = "90D" },
     ]
     secrets = [
-      { name = "MONGODB_URI", valueFrom = var.mongodb_secret_arn },
-      { name = "JWT_SECRET", valueFrom = var.jwt_secret_arn },
+      { name = "MONGODB_CONNECTING_URL", valueFrom = var.mongodb_secret_arn },
+      { name = "JWT_ACCESS_TOKEN_SECRET", valueFrom = var.jwt_access_secret_arn },
+      { name = "JWT_REFRESH_TOKEN_SECRET", valueFrom = var.jwt_refresh_secret_arn },
+      { name = "ENCRYPTION_KEY", valueFrom = var.encryption_key_secret_arn },
     ]
     logConfiguration = {
       logDriver = "awslogs"

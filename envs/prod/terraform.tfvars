@@ -6,6 +6,8 @@ availability_zones  = ["us-east-1a", "us-east-1b"]
 
 container_image = "public.ecr.aws/nginx/nginx:latest"
 
+frontend_url = "https://whispe.me"
+
 github_org     = "whispe-chat"
 github_org_id  = "323445357"
 github_repo    = "whispe-backend"

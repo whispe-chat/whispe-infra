@@ -21,7 +21,7 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_managed" {
 data "aws_iam_policy_document" "ecs_execution_secrets" {
   statement {
     actions   = ["secretsmanager:GetSecretValue"]
-    resources = [var.mongodb_secret_arn, var.jwt_secret_arn]
+    resources = [var.mongodb_secret_arn, var.jwt_access_secret_arn, var.jwt_refresh_secret_arn, var.encryption_key_secret_arn]
   }
 }
 

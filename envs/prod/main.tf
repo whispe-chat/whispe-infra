@@ -76,38 +76,43 @@ module "storage" {
 }
 
 module "iam" {
-  source                   = "../../modules/iam"
-  project_name             = var.project_name
-  environment              = var.environment
-  github_oidc_provider_arn = var.github_oidc_provider_arn
-  github_org               = var.github_org
-  github_org_id            = var.github_org_id
-  github_repo              = var.github_repo
-  github_repo_id           = var.github_repo_id
-  s3_bucket_arn            = module.storage.bucket_arn
-  mongodb_secret_arn       = module.storage.mongodb_secret_arn
-  jwt_secret_arn           = module.storage.jwt_secret_arn
+  source                    = "../../modules/iam"
+  project_name              = var.project_name
+  environment               = var.environment
+  github_oidc_provider_arn  = var.github_oidc_provider_arn
+  github_org                = var.github_org
+  github_org_id             = var.github_org_id
+  github_repo               = var.github_repo
+  github_repo_id            = var.github_repo_id
+  s3_bucket_arn             = module.storage.bucket_arn
+  mongodb_secret_arn        = module.storage.mongodb_secret_arn
+  jwt_access_secret_arn     = module.storage.jwt_access_secret_arn
+  jwt_refresh_secret_arn    = module.storage.jwt_refresh_secret_arn
+  encryption_key_secret_arn = module.storage.encryption_key_secret_arn
 }
 
 module "ecs" {
-  source                = "../../modules/ecs"
-  project_name          = var.project_name
-  environment           = var.environment
-  aws_region            = var.aws_region
-  public_subnet_ids     = module.network.public_subnet_ids
-  ecs_security_group_id = module.network.ecs_security_group_id
-  target_group_arn      = module.alb.target_group_arn
-  container_port        = var.container_port
-  container_image       = var.container_image
-  fargate_cpu           = var.fargate_cpu
-  fargate_memory        = var.fargate_memory
-  desired_count         = var.desired_count
-  execution_role_arn    = module.iam.execution_role_arn
-  task_role_arn         = module.iam.task_role_arn
-  s3_bucket_name        = module.storage.bucket_name
-  mongodb_secret_arn    = module.storage.mongodb_secret_arn
-  jwt_secret_arn        = module.storage.jwt_secret_arn
-  log_retention_days    = var.log_retention_days
+  source                    = "../../modules/ecs"
+  project_name              = var.project_name
+  environment               = var.environment
+  aws_region                = var.aws_region
+  public_subnet_ids         = module.network.public_subnet_ids
+  ecs_security_group_id     = module.network.ecs_security_group_id
+  target_group_arn          = module.alb.target_group_arn
+  container_port            = var.container_port
+  container_image           = var.container_image
+  fargate_cpu               = var.fargate_cpu
+  fargate_memory            = var.fargate_memory
+  desired_count             = var.desired_count
+  execution_role_arn        = module.iam.execution_role_arn
+  task_role_arn             = module.iam.task_role_arn
+  s3_bucket_name            = module.storage.bucket_name
+  mongodb_secret_arn        = module.storage.mongodb_secret_arn
+  jwt_access_secret_arn     = module.storage.jwt_access_secret_arn
+  jwt_refresh_secret_arn    = module.storage.jwt_refresh_secret_arn
+  encryption_key_secret_arn = module.storage.encryption_key_secret_arn
+  frontend_url              = var.frontend_url
+  log_retention_days        = var.log_retention_days
 
   depends_on = [module.alb]
 }

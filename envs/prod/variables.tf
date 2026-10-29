@@ -46,6 +46,10 @@ variable "log_retention_days" {
   type    = number
   default = 14
 }
+variable "frontend_url" {
+  type        = string
+  description = "Frontend URL for CORS origin and cookie domain"
+}
 
 variable "github_org" { type = string }
 variable "github_org_id" { type = string }

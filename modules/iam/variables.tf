@@ -7,4 +7,6 @@ variable "github_repo" { type = string }
 variable "github_repo_id" { type = string }
 variable "s3_bucket_arn" { type = string }
 variable "mongodb_secret_arn" { type = string }
-variable "jwt_secret_arn" { type = string }
+variable "jwt_access_secret_arn" { type = string }
+variable "jwt_refresh_secret_arn" { type = string }
+variable "encryption_key_secret_arn" { type = string }
