@@ -16,6 +16,10 @@ crash.*.log
 *.tfvars
 *.tfvars.json
 
+# Whitelist environment configuration files (which contain no secrets)
+!envs/prod/terraform.tfvars
+!envs/dev/terraform.tfvars
+
 # Ignore override files as they are usually used to override resources locally and so
 # are not checked in
 override.tf
