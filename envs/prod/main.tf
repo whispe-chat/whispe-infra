@@ -65,10 +65,11 @@ module "dns" {
 }
 
 module "storage" {
-  source       = "../../modules/storage"
-  project_name = var.project_name
-  environment  = var.environment
-  frontend_url = var.frontend_url
+  source                 = "../../modules/storage"
+  project_name           = var.project_name
+  environment            = var.environment
+  secret_recovery_window = 0
+  frontend_url           = var.frontend_url
 }
 
 module "iam" {
