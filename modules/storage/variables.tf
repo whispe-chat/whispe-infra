@@ -4,3 +4,4 @@ variable "secret_recovery_window" {
   type    = number
   default = 30
 }
+variable "frontend_url" { type = string }

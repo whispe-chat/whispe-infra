@@ -28,13 +28,14 @@ data "aws_route53_zone" "primary" {
 }
 
 module "network" {
-  source              = "../../modules/network"
-  project_name        = var.project_name
-  environment         = var.environment
-  vpc_cidr            = var.vpc_cidr
-  public_subnet_cidrs = var.public_subnet_cidrs
-  availability_zones  = var.availability_zones
-  container_port      = var.container_port
+  source               = "../../modules/network"
+  project_name         = var.project_name
+  environment          = var.environment
+  vpc_cidr             = var.vpc_cidr
+  public_subnet_cidrs  = var.public_subnet_cidrs
+  private_subnet_cidrs = var.private_subnet_cidrs
+  availability_zones   = var.availability_zones
+  container_port       = var.container_port
 }
 
 module "certificate" {
@@ -63,16 +64,11 @@ module "dns" {
   alb_zone_id  = module.alb.alb_zone_id
 }
 
-module "ecr" {
-  source       = "../../modules/ecr"
-  project_name = var.project_name
-  environment  = var.environment
-}
-
 module "storage" {
   source       = "../../modules/storage"
   project_name = var.project_name
   environment  = var.environment
+  frontend_url = var.frontend_url
 }
 
 module "iam" {
@@ -96,7 +92,7 @@ module "ecs" {
   project_name              = var.project_name
   environment               = var.environment
   aws_region                = var.aws_region
-  public_subnet_ids         = module.network.public_subnet_ids
+  private_subnet_ids        = module.network.private_subnet_ids
   ecs_security_group_id     = module.network.ecs_security_group_id
   target_group_arn          = module.alb.target_group_arn
   container_port            = var.container_port

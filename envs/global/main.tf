@@ -60,3 +60,9 @@ resource "aws_route53_zone" "primary" {
     ManagedBy = "terraform"
   }
 }
+
+module "ecr" {
+  source       = "../../modules/ecr"
+  project_name = var.project_name
+  environment  = "backend"
+}
