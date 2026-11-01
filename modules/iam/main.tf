@@ -82,13 +82,6 @@ resource "aws_iam_role" "github_deploy" {
 
 data "aws_iam_policy_document" "github_deploy_permissions" {
   statement {
-    actions = [
-      "ecr:GetAuthorizationToken", "ecr:BatchCheckLayerAvailability", "ecr:PutImage",
-      "ecr:InitiateLayerUpload", "ecr:UploadLayerPart", "ecr:CompleteLayerUpload",
-    ]
-    resources = ["*"]
-  }
-  statement {
     actions   = ["ecs:UpdateService", "ecs:DescribeServices", "ecs:DescribeTaskDefinition", "ecs:RegisterTaskDefinition"]
     resources = ["*"]
   }

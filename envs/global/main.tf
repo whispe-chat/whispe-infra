@@ -62,7 +62,11 @@ resource "aws_route53_zone" "primary" {
 }
 
 module "ecr" {
-  source       = "../../modules/ecr"
-  project_name = var.project_name
-  environment  = "backend"
+  source                   = "../../modules/ecr"
+  project_name             = var.project_name
+  github_oidc_provider_arn = module.github_oidc.arn
+  github_org               = var.github_org
+  github_org_id            = var.github_org_id
+  github_repo              = var.github_repo
+  github_repo_id           = var.github_repo_id
 }
