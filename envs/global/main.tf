@@ -67,6 +67,6 @@ module "ecr" {
   github_oidc_provider_arn = module.github_oidc.arn
   github_org               = var.github_org
   github_org_id            = var.github_org_id
-  github_repo              = var.github_repo
-  github_repo_id           = var.github_repo_id
+  github_repo              = var.github_backend_repo
+  github_repo_id           = var.github_backend_repo_id
 }

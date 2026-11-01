@@ -14,3 +14,14 @@ variable "domain_name" {
   type    = string
   default = "whispe.me"
 }
+variable "github_backend_repo" {
+  type        = string
+  description = "The repository that builds and pushes container images"
+  default     = "whispe-backend"
+}
+
+variable "github_backend_repo_id" {
+  type        = string
+  description = "The numeric GitHub repository ID of whispe-backend"
+  default     = "919861952"
+}
