@@ -21,6 +21,10 @@ resource "aws_lb_target_group" "app" {
     timeout             = 5
     matcher             = "200-299"
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_lb_listener" "https" {

@@ -52,17 +52,24 @@ resource "aws_ecs_task_definition" "app" {
 }
 
 resource "aws_ecs_service" "app" {
-  name                   = "${var.project_name}-${var.environment}-service"
-  cluster                = aws_ecs_cluster.main.id
-  task_definition        = aws_ecs_task_definition.app.arn
-  desired_count          = var.desired_count
-  launch_type            = "FARGATE"
-  enable_execute_command = true
+  name                               = "${var.project_name}-${var.environment}-service"
+  cluster                            = aws_ecs_cluster.main.id
+  task_definition                    = aws_ecs_task_definition.app.arn
+  desired_count                      = var.desired_count
+  launch_type                        = "FARGATE"
+  enable_execute_command             = true
+  deployment_minimum_healthy_percent = 100
+  deployment_maximum_percent         = 200
+
+  deployment_circuit_breaker {
+    enable   = true
+    rollback = true
+  }
 
   network_configuration {
-    subnets          = var.public_subnet_ids
+    subnets          = var.private_subnet_ids
     security_groups  = [var.ecs_security_group_id]
-    assign_public_ip = true
+    assign_public_ip = false
   }
 
   load_balancer {
